@@ -2,33 +2,138 @@
     <head>
         <meta charset="utf-8">
         <title>Commande</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f4f4f9;
+                color: #333;
+                height: 100vh;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            h1 {
+                font-size: 24px;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .order-container {
+                overflow-y: auto;
+                max-height: 70vh;
+                width: 100%;
+                padding: 0 10px;
+            }
+
+            .order-card {
+                background-color: white;
+                width: 100%;
+                max-width: 600px;
+                padding: 15px;
+                margin-bottom: 15px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-left: 5px solid #43a6ad;
+            }
+
+            .order-card h1 {
+                font-size: 18px;
+                margin-bottom: 10px;
+                color: #43a6ad;
+            }
+
+            .order-details {
+                list-style: none;
+                margin-bottom: 15px;
+                padding-left: 10px;
+            }
+
+            .order-details li {
+                font-size: 14px;
+                padding: 5px 0;
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .order-details li:last-child {
+                border-bottom: none;
+            }
+
+            .order-info p {
+                font-size: 13px;
+                margin-bottom: 6px;
+                color: #555;
+            }
+
+            .confirm-link {
+                display: inline-block;
+                margin-top: 10px;
+                padding: 8px 15px;
+                background-color: #43a6ad;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+
+            .confirm-link:hover {
+                background-color: #36858d;
+            }
+
+            .back-link {
+                padding: 10px 15px;
+                background-color: #43a6ad;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+
+            .back-link:hover {
+                background-color: #36858d;
+            }
+
+        </style>
     </head>
     <body>
-        <div>
+        <h1>Liste des Commandes</h1>
+
+        <div class="order-container">
             {% for c in com %}
-                <div>
-                    <h1>{{ c.client }}</h1>
-                    <ol>
+                <div class="order-card">
+                    <h1>Client : {{ c.client }}</h1>
+                    <ol class="order-details">
                         {% for m in c.menu.all %}
-                        <li>{{ m.name }} ..... {{ m.price }} Ar</li>
+                        <li>{{ m.name }} <span>{{ m.price }} Ar</span></li>
                         {% endfor %}
                     </ol>
-                    <p>Date : {{c.date}}</p>
-                    <p>Etat : {{ c.type }} </p>
-                    <p>Total : {{ c.total }} Ar</p>
-                    <p>Message Mobile Money : {{ c.message }}</p>
-                    {% if c.commentaire %}
-                    <p>Commentaire : {{ c.commentaire }}</p>
-                    {% else %}
-                    <p>Pas de commentaire</p>
-                    {% endif%}
-                    {% if c.type == attente %}
-                    <p><a href="{% url 'confirmCommand' pk=c.pk %}">Confirmer la commande</a></p>
-                    {% endif %}
-                    
+                    <div class="order-info">
+                        <p>Date : {{c.date}}</p>
+                        <p>État : {{ c.type }}</p>
+                        <p>Total : {{ c.total }} Ar</p>
+                        <p>Message Mobile Money : {{ c.message }}</p>
+                        {% if c.commentaire %}
+                        <p>Commentaire : {{ c.commentaire }}</p>
+                        {% else %}
+                        <p>Pas de commentaire</p>
+                        {% endif %}
+                        {% if c.type == 'attente' %}
+                        <a href="{% url 'confirmCommand' pk=c.pk %}" class="confirm-link">Confirmer la commande</a>
+                        {% endif %}
+                    </div>
                 </div>
             {% endfor %}
         </div>
-        <a href="{% url 'home' %}">Retour</a>
+
+        <a href="{% url 'home' %}" class="back-link">Retour</a>
     </body>
 </html>
