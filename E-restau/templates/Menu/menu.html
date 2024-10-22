@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Menu</title>
+    </head>
+    <body>
+        <a href="{% url 'home'%}">Home</a>
+        {% for m, d in menu.items %}
+            <h1>{{ m }}</h1>
+            {% for a in d %}
+            <p>{{ a.name }} ...... {{ a.price }} Ar     
+                {% if ajout %}
+                <a href="{% url 'commandeMenu' pk=a.pk %}">ajouter à la commande </a>
+                {% endif %}
+            </p> 
+            {% endfor %}
+        {% endfor %}
+    </body>
+</html>

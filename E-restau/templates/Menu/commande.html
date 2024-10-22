@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Home</title>
+    </head>
+    <body>
+        <div>
+            {% if commande %}
+            <h1>Commande en cours</h1>
+            <p>Client : {{ commande.client }}</p>
+            {% if commande.menu.all %}
+            <ol>
+                <h3>Menu commandé</h3>
+                {% for m in commande.menu.all %}
+                <li>{{ m.name }} ..... {{ m.price }} Ar</li>
+                {% endfor %}
+            </ol>
+            <p>Total : {{ total }} Ar</p>
+            {% else %}
+                <h3>Aucun commande ( ajouter dans le menu ) </h3>
+            {% endif %}
+            <form method="POST" action="{% url 'modifyCommande' %}">
+                {% csrf_token %}
+                <label for="msg" required>Message Mvola : </label>
+                <textarea id="msg" name="msg"></textarea>
+                <label for="commentaire">Commentaire : </label>
+                <textarea id="commentaire" name="commentaire"></textarea>
+                <input type="submit" value="envoyer">
+            </form>
+            {% else %}
+                <h1>Aucune commande en cour</h1>
+            {% endif %}
+        </div>
+        <a href="{% url 'home' %}">Home</a>
+        
+        {% if not commande %}
+        <a href="{% url 'createCommande' %}">Créer commande</a>
+        {% endif %}
+    </body>
+</html>

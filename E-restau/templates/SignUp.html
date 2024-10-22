@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" >
+        <title>Restaurant</title>
+        <style>
+            body
+            {
+                background-color: #43a6ad;
+                
+                height : 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            #conteneur 
+            {
+                width: 50%;
+                height: 50%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="conteneur">
+            <form method="POST">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <input type="submit" value="s'incrire">
+            </form>
+            {% for msg in errors.values%}
+                <h3 style="color : red">
+                    {{ msg }}
+                </h3>
+            {% endfor %}
+            <a href="/account/login">Connexion</a>
+        </div>
+    </body>
+</html>
