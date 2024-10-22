@@ -1,17 +1,117 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" >
-        <title>Restaurant</title>
+        <meta charset="utf-8">
+        <title>Restaurant - Connexion</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background-color: #e0f7fa;
+                font-family: 'Arial', sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+
+            .form-container {
+                background-color: #ffffff;
+                padding: 40px;
+                border-radius: 12px;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 400px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .form-container h2 {
+                font-size: 1.8em;
+                color: #333;
+                margin-bottom: 20px;
+                font-weight: bold;
+            }
+
+            form {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            input[type="text"], input[type="password"], input[type="email"] {
+                width: 100%;
+                padding: 12px;
+                font-size: 1em;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                transition: border-color 0.3s ease;
+            }
+
+            input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+                border-color: #43a6ad;
+                outline: none;
+            }
+
+            input[type="submit"] {
+                background-color: #43a6ad;
+                color: white;
+                border: none;
+                padding: 12px;
+                font-size: 1.1em;
+                cursor: pointer;
+                border-radius: 8px;
+                transition: background-color 0.3s ease;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #36858d;
+            }
+
+            .signup-container {
+                margin-top: 10px;
+                text-align: center;
+            }
+
+            .signup-container a {
+                color: white;
+                background-color: #ff8c42;
+                padding: 12px 20px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-size: 1.1em;
+                display: inline-block;
+                transition: background-color 0.3s ease;
+                font-weight: bold;
+            }
+
+            .signup-container a:hover {
+                background-color: #e67e34;
+            }
+        </style>
     </head>
     <body>
-        <form method="POST">
-            {% csrf_token %}
+        <div class="form-container">
+            <h2>Connexion</h2>
 
-            {{ form.as_p }}
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Se connecter">
+            </form>
 
-            <input type="submit" value="se connecter">
-        </form>
-        <a href="/signup/">Créer un compte</a>
+            <div class="signup-container">
+                <a href="/signup/">Créer un compte</a>
+            </div>
+        </div>
     </body>
 </html>
