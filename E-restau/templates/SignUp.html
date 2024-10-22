@@ -1,39 +1,105 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" >
+        <meta charset="utf-8">
         <title>Restaurant</title>
         <style>
-            body
-            {
-                background-color: #43a6ad;
-                
-                height : 100vh;
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background-color: #e0f7fa;
+                font-family: 'Arial', sans-serif;
+                height: 100vh;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                padding: 20px;
             }
-            #conteneur 
-            {
-                width: 50%;
-                height: 50%;
+
+            #conteneur {
+                background-color: #fff;
+                width: 100%;
+                max-width: 500px;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+            h2{
+                margin-bottom: 1rem;
+            }
+
+            h3 {
+                color: red;
+                font-size: 1.2em;
+                margin-top: 15px;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            input[type="text"], input[type="password"], input[type="email"] {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 1em;
+                transition: border-color 0.3s ease;
+            }
+
+            input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+                border-color: #43a6ad;
+                outline: none;
+            }
+
+            input[type="submit"] {
+                background-color: #43a6ad;
+                color: white;
+                border: none;
+                padding: 12px;
+                font-size: 1.1em;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #36858d;
+            }
+
+            a {
+                color: #43a6ad;
+                text-decoration: none;
+                font-size: 0.9em;
+                display: inline-block;
+                margin-top: 15px;
+            }
+
+            a:hover {
+                text-decoration: underline;
             }
         </style>
     </head>
     <body>
         <div id="conteneur">
+            <h2>inscription</h2>
             <form method="POST">
                 {% csrf_token %}
-
                 {{ form.as_p }}
-
-                <input type="submit" value="s'incrire">
+                <input type="submit" value="S'inscrire">
             </form>
-            {% for msg in errors.values%}
-                <h3 style="color : red">
-                    {{ msg }}
-                </h3>
+            
+            {% for msg in errors.values %}
+                <h3>{{ msg }}</h3>
             {% endfor %}
+
             <a href="/account/login">Connexion</a>
         </div>
     </body>

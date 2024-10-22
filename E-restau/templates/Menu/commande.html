@@ -1,40 +1,203 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Home</title>
-    </head>
-    <body>
-        <div>
-            {% if commande %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commande en cours</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            color: #43a6ad;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .commande-info {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .commande-info p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .commande-info h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            color: #9f7126;
+        }
+
+        .commande-info ol {
+            padding-left: 20px;
+        }
+
+        .commande-info li {
+            font-size: 1.1em;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .commande-info li span {
+            font-weight: bold;
+            color: #43a6ad;
+        }
+
+        .total {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ff5722;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        form {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            resize: none;
+            min-height: 5px;
+        }
+
+        input[type="submit"] {
+            padding: 12px 25px;
+            background-color: #43a6ad;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #36858d;
+        }
+
+        .no-commande {
+            font-size: 1.2em;
+            color: #ff5252;
+            margin-bottom: 30px;
+        }
+
+        /* Styled links */
+        .btn-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #43a6ad;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .btn-link:hover {
+            background-color: #36858d;
+        }
+
+        .footer-link {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1em;
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        {% if commande %}
             <h1>Commande en cours</h1>
-            <p>Client : {{ commande.client }}</p>
-            {% if commande.menu.all %}
-            <ol>
-                <h3>Menu commandé</h3>
-                {% for m in commande.menu.all %}
-                <li>{{ m.name }} ..... {{ m.price }} Ar</li>
-                {% endfor %}
-            </ol>
-            <p>Total : {{ total }} Ar</p>
-            {% else %}
-                <h3>Aucun commande ( ajouter dans le menu ) </h3>
-            {% endif %}
+            <div class="commande-info">
+                <p>Client : <strong>{{ commande.client }}</strong></p>
+
+                {% if commande.menu.all %}
+                    <h3>Menu commandé</h3>
+                    <ol>
+                        {% for m in commande.menu.all %}
+                        <li>
+                            {{ m.name }}
+                            <span>{{ m.price }} Ar</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    <p class="total">Total : {{ total }} Ar</p>
+                {% else %}
+                    <p class="no-commande">Aucun plat commandé pour l'instant.</p>
+                {% endif %}
+            </div>
+
             <form method="POST" action="{% url 'modifyCommande' %}">
                 {% csrf_token %}
-                <label for="msg" required>Message Mvola : </label>
-                <textarea id="msg" name="msg"></textarea>
-                <label for="commentaire">Commentaire : </label>
+                <label for="msg">Message Mvola :</label>
+                <textarea id="msg" name="msg" required></textarea>
+
+                <label for="commentaire">Commentaire :</label>
                 <textarea id="commentaire" name="commentaire"></textarea>
-                <input type="submit" value="envoyer">
+
+                <input type="submit" value="Envoyer">
             </form>
-            {% else %}
-                <h1>Aucune commande en cour</h1>
-            {% endif %}
-        </div>
-        <a href="{% url 'home' %}">Home</a>
-        
-        {% if not commande %}
-        <a href="{% url 'createCommande' %}">Créer commande</a>
+        {% else %}
+            <h1>Aucune commande en cours</h1>
+            <p class="no-commande">Vous n'avez pas encore de commande.</p>
+            <a href="{% url 'createCommande' %}" class="btn-link">Créer une commande</a>
         {% endif %}
-    </body>
+
+        <a href="{% url 'home' %}" class="footer-link">Retour à l'accueil</a>
+    </div>
+</body>
+
 </html>

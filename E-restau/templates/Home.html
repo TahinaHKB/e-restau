@@ -1,15 +1,172 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title>Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Restaurant - Accueil</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f5f5f5;
+                color: #333;
+            }
+
+            /* Navbar starttttt */
+            nav {
+                background-color: #43a6ad;
+                padding: 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            nav h1 {
+                color: white;
+                font-size: 1.8em;
+            }
+
+            nav ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+            }
+
+            nav ul li {
+                display: inline;
+            }
+
+            nav ul li a {
+                color: white;
+                text-decoration: none;
+                font-size: 1em;
+                padding: 10px 20px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            nav ul li a:hover {
+                background-color: #36858d;
+            }
+
+            /* Main content startttt */
+            main {
+                padding: 50px 20px;
+                text-align: center;
+            }
+
+            main h1 {
+                font-size: 2em;
+                margin-bottom: 30px;
+            }
+
+            .card-container {
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                flex-wrap: wrap;
+            }
+
+            .card {
+                background-color: white;
+                width: 300px;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                text-align: center;
+            }
+
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .card img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 10px;
+            }
+
+            .card h3 {
+                font-size: 1.5em;
+                margin: 20px 0;
+            }
+
+            .card a {
+                text-decoration: none;
+                color: #43a6ad;
+                font-size: 1em;
+                padding: 10px 20px;
+                border-radius: 5px;
+                border: 1px solid #43a6ad;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+            .card a:hover {
+                background-color: #43a6ad;
+                color: white;
+            }
+
+            /* Footer */
+            footer {
+                background-color: #43a6ad;
+                color: white;
+                text-align: center;
+                padding: 20px;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+        </style>
     </head>
     <body>
-        <h1>Hello {{ username }}</h1>
-        <a href="{% url 'menu' %}">Menu</a>
-        <a href="{% url 'commande' %}">Commande</a>
-        {% if superuser %}
-        <a href="{% url 'gestionCommande' %}">Gérer commande</a>
-        {% endif %}
-        <a href="{% url 'deconnexion' %}">Déconnecter</a>
+        <!-- Navbar ******* -->
+        <nav>
+            <h1>Bienvenue {{ username }}</h1>
+            <ul>
+                <li><a href="{% url 'menu' %}">Menu</a></li>
+                <li><a href="{% url 'commande' %}">Commande</a></li>
+                {% if superuser %}
+                <li><a href="{% url 'gestionCommande' %}">Gérer commande</a></li>
+                {% endif %}
+                <li><a href="{% url 'deconnexion' %}">Déconnecter</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content********** -->
+        <main>
+            <h1>Bienvenue sur le site du restaurant !</h1>
+            <div class="card-container">
+                <div class="card">
+                    <img src="../image/1.jpeg" alt="Menu Image">
+                    <h3>Découvrez notre Menu</h3>
+                    <a href="{% url 'menu' %}">Voir le menu</a>
+                </div>
+                <div class="card">
+                    <img src="../image/1.jpeg" alt="Commande Image">
+                    <h3>Faire une  Commande</h3>
+                    <a href="{% url 'commande' %}">Commander maintenant</a>
+                </div>
+                {% if superuser %}
+                <div class="card">
+                    <img src="../image/1.jpeg" alt="Gestion Commande Image">
+                    <h3>Gérer les Commandes</h3>
+                    <a href="{% url 'gestionCommande' %}">Accéder à la gestion</a>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+
+        <!-- Footer******** -->
+        <footer>
+            © 2024 Restaurant. Tous droits réservés.
+        </footer>
     </body>
 </html>
